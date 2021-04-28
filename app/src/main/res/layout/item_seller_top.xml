@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="24dp">
+
+    <ImageView
+        android:id="@+id/imageViewSeller"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/productdemo" />
+
+    <TextView
+        android:id="@+id/tvRanking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:lineHeight="17.5sp"
+        android:paddingStart="7dp"
+        android:paddingEnd="7dp"
+        android:text="1"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvNameSeller"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <ImageView
+        android:id="@+id/imageRank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRanking"
+        app:layout_constraintLeft_toRightOf="@id/tvRanking"
+        app:layout_constraintTop_toTopOf="@+id/tvRanking"
+        app:srcCompat="@drawable/ic_up" />
+
+    <TextView
+        android:id="@+id/tvBienThien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:background="@null"
+        android:lineHeight="15sp"
+        android:text="3"
+        android:textColor="#4CAF50"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageRank"
+        app:layout_constraintLeft_toRightOf="@id/imageRank"
+        app:layout_constraintTop_toTopOf="@+id/imageRank" />
+
+    <TextView
+        android:id="@+id/tvNameSeller"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Person Mandaley"
+        android:textSize="16sp"
+        android:lineHeight="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="13dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvHastag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRanking" />
+
+    <TextView
+        android:id="@+id/tvHastag"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="#9A9A9A"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewSeller"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNameSeller" />
+</androidx.constraintlayout.widget.ConstraintLayout>

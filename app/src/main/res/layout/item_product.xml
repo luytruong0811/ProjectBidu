@@ -2,61 +2,105 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginRight="3.5dp"
+    android:layout_marginEnd="3.5dp"
+    android:layout_marginBottom="10dp">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="170dp"
-        android:layout_height="180dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/productdemo" />
-
-    <ImageView
-        android:id="@+id/seletedlike"
+        android:id="@+id/imageProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:src="@drawable/productdemo"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageCheckLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         app:srcCompat="@drawable/ic_favorite_icon__stroke_"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_marginTop="5dp"
-        android:id="@+id/tvTittle"
+        android:id="@+id/tvNew"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginBottom="4.5dp"
+        android:text="New"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="10sp"
+        android:lineHeight="12.5sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageProduct"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNameProduct"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:layout_marginTop="4dp"
         android:maxLines="2"
-        android:text="[Woman]Trouser Short "
+        android:lineHeight="15sp"
+        android:textSize="12sp"
         android:textColor="@color/black"
         android:minHeight="40dp"
-        android:ellipsize="end"/>
+        android:ellipsize="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageProduct"/>
     <TextView
         android:id="@+id/tvSaleprice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="1.000.000đ"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:lineHeight="12.5sp"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTittle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNameProduct" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvProductPrice"
         android:layout_width="0dp"
-        android:textSize="20sp"
         android:layout_height="wrap_content"
-        android:text="12.000.000đ"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:textSize="14sp"
+        android:lineHeight="17.5sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSaleprice" />
+
+    <TextView
+        android:id="@+id/tvProcductsale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2.5dp"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginBottom="4.5dp"
+        android:background="#FD37AE"
+        android:gravity="center"
+        android:text="12%"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:textColor="#ffffff"
+        android:textSize="10sp"
+        android:lineHeight="12.5sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageProduct"
+        app:layout_constraintStart_toEndOf="@+id/tvNew" />
 </androidx.constraintlayout.widget.ConstraintLayout>

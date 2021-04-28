@@ -1,22 +1,46 @@
-package com.example.projectbidu;
+package com.example.projectbidu.model;
 
 public class Product {
     private int imageProduct;
     private boolean like;
     private String title;
-    private long price;
-    private long salePrice;
+    private String category;
+    private Long price;
+    private Long salePrice;
     private boolean productNew;
-    private int sale;
+    private Long sale;
 
-    public Product(int imageProduct, boolean like, String title, long price, long salePrice, boolean productNew, int sale) {
+    public Product(int imageProduct, boolean like, String title, String category, Long price, Long salePrice, boolean productNew, Long sale) {
         this.imageProduct = imageProduct;
         this.like = like;
         this.title = title;
+        this.category = category;
         this.price = price;
         this.salePrice = salePrice;
         this.productNew = productNew;
         this.sale = sale;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "imageProduct=" + imageProduct +
+                ", like=" + like +
+                ", title='" + title + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", salePrice=" + salePrice +
+                ", productNew=" + productNew +
+                ", sale=" + sale +
+                '}';
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getImageProduct() {
@@ -43,19 +67,19 @@ public class Product {
         this.title = title;
     }
 
-    public long getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
-    public long getSalePrice() {
+    public Long getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(long salePrice) {
+    public void setSalePrice(Long salePrice) {
         this.salePrice = salePrice;
     }
 
@@ -67,11 +91,11 @@ public class Product {
         this.productNew = productNew;
     }
 
-    public int getSale() {
+    public Long getSale() {
         return sale;
     }
 
-    public void setSale(int sale) {
+    public void setSale(Long sale) {
         this.sale = sale;
     }
 }

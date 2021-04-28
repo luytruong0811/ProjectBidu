@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/customer_button"
+    android:id="@+id/tvTittle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="10dp"
     android:layout_marginTop="10dp"
-    android:background="@drawable/customer_button"
-    android:layout_marginRight="10dp">
-    <TextView
-        android:padding="8.5dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:id="@+id/tvTittle"
-        android:text="@string/app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+    android:layout_marginRight="10dp"
+    android:gravity="center"
+    android:padding="8.5dp"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp"
+    android:textSize="12sp">
+</TextView>
