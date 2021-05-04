@@ -1,6 +1,5 @@
 package com.example.projectbidu.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,11 @@ import com.example.projectbidu.model.Seller;
 
 import java.util.List;
 
-public class AdapterSellers extends RecyclerView.Adapter<AdapterSellers.SellerViewhodel> {
-    private List<Seller> mListSellers;
+public class TopSellerAdapter extends RecyclerView.Adapter<TopSellerAdapter.SellerViewhodel> {
+    private final List<Seller> sellers;
 
-
-    public AdapterSellers(List<Seller> mListSellers) {
-        this.mListSellers = mListSellers;
+    public TopSellerAdapter(List<Seller> mListSellers) {
+        this.sellers = mListSellers;
     }
 
     @NonNull
@@ -32,34 +30,30 @@ public class AdapterSellers extends RecyclerView.Adapter<AdapterSellers.SellerVi
 
     @Override
     public void onBindViewHolder(@NonNull SellerViewhodel holder, int position) {
-        Seller seller = mListSellers.get(position);
+        Seller seller = sellers.get(position);
         holder.imageSeller.setImageResource(seller.getImageSeller());
         holder.tvRanking.setText(String.valueOf(seller.getRankSeller()));
         holder.tvUserSeller.setText(seller.getUserName());
         holder.tvHasTag.setText(seller.getHasTag());
-        //bien thien......?
-        //
     }
 
     @Override
     public int getItemCount() {
-        return mListSellers.size();
+        return sellers.size();
     }
 
     public class SellerViewhodel extends RecyclerView.ViewHolder {
-        private TextView tvRanking;
-        private TextView tvBienThien;
-        private TextView tvUserSeller;
-        private TextView tvHasTag;
-        private ImageView imageRank;
-        private ImageView imageSeller;
+        private final TextView tvRanking;
+        private final TextView tvUserSeller;
+        private final TextView tvHasTag;
+        private final ImageView imageSeller;
         public SellerViewhodel(@NonNull View itemView) {
             super(itemView);
             tvRanking = itemView.findViewById(R.id.tvRanking);
-            tvBienThien = itemView.findViewById(R.id.tvBienThien);
+            TextView tvChange = itemView.findViewById(R.id.tv_change);
             tvUserSeller = itemView.findViewById(R.id.tvNameSeller);
             tvHasTag = itemView.findViewById(R.id.tvHastag);
-            imageRank = itemView.findViewById(R.id.imageRank);
+            ImageView imageRank = itemView.findViewById(R.id.imageRank);
             imageSeller = itemView.findViewById(R.id.imageViewSeller);
         }
     }
@@ -72,4 +66,5 @@ public class AdapterSellers extends RecyclerView.Adapter<AdapterSellers.SellerVi
     public int getItemViewType(int position) {
         return position;
     }
+
 }

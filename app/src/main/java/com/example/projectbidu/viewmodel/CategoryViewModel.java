@@ -12,28 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryViewModel extends ViewModel {
-    private MutableLiveData<List<Category>> mListCategoryLiveData;
-    private List<Category> mListCategory;
+    private MutableLiveData<List<Category>> mutableLiveData;
+    private List<Category> categories;
 
     public CategoryViewModel() {
-        mListCategoryLiveData = new MutableLiveData<>();
-        initData();
-    }
-
-    private void initData() {
-        mListCategory = new ArrayList<>();
-        mListCategory.add(new Category("All"));
-        mListCategory.add(new Category("Jacket"));
-        mListCategory.add(new Category("Sweater"));
-        mListCategory.add(new Category("Skinny pants"));
-        mListCategory.add(new Category("Blouse"));
-        mListCategory.add(new Category("Sweater"));
-        mListCategory.add(new Category("Skinny pants"));
-        mListCategory.add(new Category("Blouse"));
-        mListCategoryLiveData.setValue(mListCategory);
+        mutableLiveData = new MutableLiveData<>();
+        categories = new ArrayList<>();
+        categories.add(new Category("All"));
+        categories.add(new Category("Jacket"));
+        categories.add(new Category("Sweater"));
+        categories.add(new Category("Skinny pants"));
+        categories.add(new Category("Blouse"));
+        categories.add(new Category("Sweater"));
+        categories.add(new Category("Skinny pants"));
+        categories.add(new Category("Blouse"));
+        mutableLiveData.setValue(categories);
     }
 
     public LiveData<List<Category>> getListCategoryLiveData() {
-        return mListCategoryLiveData;
+        return mutableLiveData;
     }
 }

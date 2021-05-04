@@ -1,6 +1,7 @@
 package com.example.projectbidu.model;
 
 public class Product {
+    private int idProduct;
     private int imageProduct;
     private boolean like;
     private String title;
@@ -10,7 +11,8 @@ public class Product {
     private boolean productNew;
     private Long sale;
 
-    public Product(int imageProduct, boolean like, String title, String category, Long price, Long salePrice, boolean productNew, Long sale) {
+    public Product(int idProduct, int imageProduct, boolean like, String title, String category, Long price, Long salePrice, boolean productNew, Long sale) {
+        this.idProduct = idProduct;
         this.imageProduct = imageProduct;
         this.like = like;
         this.title = title;
@@ -21,26 +23,12 @@ public class Product {
         this.sale = sale;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "imageProduct=" + imageProduct +
-                ", like=" + like +
-                ", title='" + title + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", salePrice=" + salePrice +
-                ", productNew=" + productNew +
-                ", sale=" + sale +
-                '}';
+    public int getIdProduct() {
+        return idProduct;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
+    public void setIdProduct(int idProduct) {
+        this.idProduct = idProduct;
     }
 
     public int getImageProduct() {
@@ -65,6 +53,14 @@ public class Product {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Long getPrice() {

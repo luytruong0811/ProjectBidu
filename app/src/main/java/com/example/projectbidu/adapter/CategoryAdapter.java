@@ -1,12 +1,9 @@
 package com.example.projectbidu.adapter;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,15 +14,15 @@ import com.example.projectbidu.model.Category;
 
 import java.util.List;
 
-public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.CategoryViewHodel> {
-    private List<Category> mList;
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHodel> {
+    private List<Category> categories;
     private ItemClickListener itemClickListener;
 
     int row_index = 0;
 
 
-    public AdapterCategory(List<Category> mList, ItemClickListener itemClickListener) {
-        this.mList = mList;
+    public CategoryAdapter(List<Category> categories, ItemClickListener itemClickListener) {
+        this.categories = categories;
         this.itemClickListener = itemClickListener;
     }
 
@@ -38,7 +35,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHodel holder, int position) {
-        Category category = mList.get(position);
+        Category category = categories.get(position);
         holder.title.setText(category.getTitle());
         holder.itemView.setOnClickListener(v->{
             row_index = position;
@@ -57,7 +54,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.Catego
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return categories.size();
     }
 
     public class CategoryViewHodel extends RecyclerView.ViewHolder {
@@ -73,5 +70,5 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.Catego
     public  interface  ItemClickListener {
         void getDataItemClick(Category category);
     }
-
+    
 }

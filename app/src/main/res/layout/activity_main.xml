@@ -22,24 +22,26 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/iv_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                app:layout_constraintEnd_toStartOf="@+id/iv_cart"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_search_icon" />
+                app:srcCompat="@drawable/ic_search_icon"
+                android:contentDescription="@string/search" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/iv_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 app:srcCompat="@drawable/ic_cart_icon__1_"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/cart" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
@@ -53,9 +55,10 @@
         app:tabSelectedTextColor="@color/black"
         app:tabIndicatorColor="@color/black"
         app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+        app:tabBackground="@drawable/linetab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
@@ -64,6 +67,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

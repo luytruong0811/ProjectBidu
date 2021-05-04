@@ -38,20 +38,24 @@
             app:layout_constraintVertical_bias="0.0">
 
             <ImageView
+                android:id="@+id/iv_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_filter" />
+                app:srcCompat="@drawable/ic_filter"
+                android:contentDescription="@string/filter1" />
 
             <ImageView
+                android:id="@+id/iv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_date_filter" />
+                app:srcCompat="@drawable/ic_date_filter"
+                android:contentDescription="@string/date1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

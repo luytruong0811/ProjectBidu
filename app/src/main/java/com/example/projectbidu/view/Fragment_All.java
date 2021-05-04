@@ -1,42 +1,44 @@
 package com.example.projectbidu.view;
 
-import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.projectbidu.R;
-import com.example.projectbidu.adapter.AdapterCategory;
-import com.example.projectbidu.adapter.AdapterProduct;
+import com.example.projectbidu.adapter.CategoryAdapter;
+import com.example.projectbidu.adapter.HasTagAdapter;
+import com.example.projectbidu.adapter.ProductAdapter;
 import com.example.projectbidu.model.Category;
 import com.example.projectbidu.model.Product;
 import com.example.projectbidu.viewmodel.CategoryViewModel;
-import com.example.projectbidu.viewmodel.ProductTopViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.projectbidu.viewmodel.HasTagViewModel;
+import com.example.projectbidu.viewmodel.ProductViewModel;
 
 
-public class Fragment_All extends Fragment implements AdapterProduct.ItemClickListener, AdapterCategory.ItemClickListener {
-    private View view;
-    private AdapterCategory adapterCategory;
-    private AdapterProduct adapterProduct;
-    private RecyclerView rvCategory,rvProduct;
-    private LinearLayoutManager mLinearLayoutManagerCategory;
-    private GridLayoutManager mGridLayoutManagerProduct;
+public class Fragment_All extends Fragment implements ProductAdapter.ItemClickListener, CategoryAdapter.ItemClickListener {
+    private CategoryAdapter categoryAdapter;
+    private ProductAdapter productAdapter;
+    private RecyclerView rvCategory;
+    private RecyclerView rvProduct;
+    private RecyclerView rvHasTag;
+    private ProductViewModel productViewModel;
 
-    private ProductTopViewModel productTopViewModel;
-    private CategoryViewModel categoryViewModel;
 
     public Fragment_All() {
         // Required empty public constructor
@@ -47,60 +49,165 @@ public class Fragment_All extends Fragment implements AdapterProduct.ItemClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment__all, container, false);
-        init();
+        View view = inflater.inflate(R.layout.fragment__all, container, false);
+        rvCategory = view.findViewById(R.id.rvCategory);
+        rvProduct = view.findViewById(R.id.rvProduct);
+        rvHasTag = view.findViewById(R.id.rv_has_tag);
+        ImageView ivFilter = view.findViewById(R.id.iv_filter);
+        ImageView ivDateFilter = view.findViewById(R.id.iv_date);
         setRecyclerviewCategory();
         setRecyclerviewProduct();
-
+        setRecyclerviewHasTag();
+        ivFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFilterDialog(Gravity.CENTER);
+            }
+        });
+        ivDateFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDateFilterDialog(Gravity.CENTER);
+            }
+        });
         return view;
+    }
+
+    private void openDateFilterDialog(int gravity) {
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_date);
+
+        Window window = dialog.getWindow();
+        if(window == null) {
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        if(Gravity.CENTER == gravity) {
+            dialog.setCancelable(false);
+        }
+        TextView tvExit = dialog.findViewById(R.id.tv_exit_date);
+        TextView tvConfirm = dialog.findViewById(R.id.tv_confirm);
+
+        tvExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void openFilterDialog(int gravity) {
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_filter);
+
+        Window window = dialog.getWindow();
+        if(window == null) {
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        if(Gravity.CENTER == gravity) {
+            dialog.setCancelable(false);
+        }
+        TextView tvExit = dialog.findViewById(R.id.tv_exit);
+        TextView tvConfirmFilter = dialog.findViewById(R.id.tv_confirm_filter);
+
+        tvExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        tvConfirmFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void setRecyclerviewHasTag() {
+        rvHasTag.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvHasTag.setLayoutManager(linearLayoutManager);
+
+        HasTagViewModel hasTagViewModel = new ViewModelProvider(this).get(HasTagViewModel.class);
+        HasTagAdapter hasTagAdapter = new HasTagAdapter(hasTagViewModel.getListHasTagLiveData().getValue());
+
+        hasTagViewModel.getListHasTagLiveData().observe(getViewLifecycleOwner(), hasTags -> {
+            hasTagAdapter.notifyDataSetChanged();
+        });
+        rvHasTag.setAdapter(hasTagAdapter);
     }
 
     private void setRecyclerviewProduct() {
         rvProduct.setHasFixedSize(true);
 
-        mGridLayoutManagerProduct =new GridLayoutManager(getContext(),2);
-        rvProduct.setLayoutManager(mGridLayoutManagerProduct);
+        GridLayoutManager gridLayoutManager =new GridLayoutManager(getContext(),2);
+        rvProduct.setLayoutManager(gridLayoutManager);
 
-        productTopViewModel = new ViewModelProvider(this).get(ProductTopViewModel.class);
+        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         //adapter
-        adapterProduct = new AdapterProduct(productTopViewModel.getListProductLiveData().getValue(),this);
 
-        productTopViewModel.getListProductLiveData().observe(getViewLifecycleOwner(),products -> {
-            adapterProduct.notifyDataSetChanged();
+        productViewModel.getListProductLiveData().observe(getViewLifecycleOwner(), products -> {
+            productAdapter = new ProductAdapter(products, this);
+            rvProduct.setAdapter(productAdapter);
         });
-        rvProduct.setAdapter(adapterProduct);
 
 
+        productViewModel.getProduct().observe(getViewLifecycleOwner(), product -> {
+            productAdapter.updateUIposition(product);
+        });
     }
 
     private void setRecyclerviewCategory() {
         rvCategory.setHasFixedSize(true);
-        mLinearLayoutManagerCategory = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-        rvCategory.setLayoutManager(mLinearLayoutManagerCategory);
-        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
-        categoryViewModel.getListCategoryLiveData().observe(getViewLifecycleOwner(),categorys->{
-            if(adapterCategory==null) {
-                adapterCategory = new AdapterCategory(categorys,this);
-                rvCategory.setAdapter(adapterCategory);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        rvCategory.setLayoutManager(linearLayoutManager);
+        CategoryViewModel categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        categoryViewModel.getListCategoryLiveData().observe(getViewLifecycleOwner(), categories->{
+            if(categoryAdapter ==null) {
+                categoryAdapter = new CategoryAdapter(categories,this);
+                rvCategory.setAdapter(categoryAdapter);
             }
-            adapterCategory.notifyDataSetChanged();
+            categoryAdapter.notifyDataSetChanged();
         });
     }
 
-    private void init() {
-        rvCategory = view.findViewById(R.id.rvCategory);
-        rvProduct =view.findViewById(R.id.rvProduct);
-    }
-
     @Override
-    public void onClick(int position) {
-        productTopViewModel.updateProduct(position);
+    public void onClick(Product product) {
+        productViewModel.updateProduct(product);
     }
 
 
     @Override
     public void getDataItemClick(Category category) {
-        productTopViewModel.resetListProduct(category);
+        productViewModel.resetListProduct(category);
     }
 }

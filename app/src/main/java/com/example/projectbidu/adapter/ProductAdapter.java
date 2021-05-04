@@ -1,13 +1,15 @@
 package com.example.projectbidu.adapter;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 
 import android.text.SpannableString;
 import android.text.style.StrikethroughSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,18 +20,21 @@ import com.example.projectbidu.R;
 import com.example.projectbidu.model.Product;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 
 
-public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ProductViewHodel> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHodel> {
 
-    private List<Product> mListProduct;
-    private ItemClickListener itemClickListener;
+    private final List<Product> products;
+    private List<Product> productList;
+    private final ItemClickListener itemClickListener;
 
 
-    public AdapterProduct(List<Product> mListProduct,ItemClickListener itemClickListener) {
-        this.mListProduct = mListProduct;
+    public ProductAdapter(List<Product> products, ItemClickListener itemClickListener) {
+        this.products = products;
+        productList = new ArrayList<>(products);
         this.itemClickListener = itemClickListener;
     }
 
@@ -40,52 +45,54 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ProductV
         return new ProductViewHodel(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ProductViewHodel holder, int position) {
-        Product product =mListProduct.get(position);
-        if(product == null )
+        Product product =products.get(position);
+        if(product == null ) {
             return;
-        else{
+        }
+        else {
             holder.imageViewProduct.setImageResource(product.getImageProduct());
-            if(product.isLike()){
+            if(product.isLike()) {
                 holder.imageCheckLike.setImageResource(R.drawable.ic_favorite_icon);
-            }else{
+            } else {
                 holder.imageCheckLike.setImageResource(R.drawable.ic_favorite_icon__stroke_);
             }
-            if(!product.isProductNew()){
+            if(!product.isProductNew()) {
                 holder.tvNew.setVisibility(View.GONE);
             }
-            if(product.getSale() == null){
+            if(product.getSale() == null) {
                 holder.tvProductSale.setVisibility(View.GONE);
-            }else{
+            } else {
                 holder.tvProductSale.setText(product.getSale()+"%");
             }
             holder.tvProductName.setText(product.getTitle());
-            if(product.getSalePrice()==null){
+            if(product.getSalePrice()==null) {
                 holder.tvProductSalePrice.setText("");
-            }else {
-                holder.tvProductSalePrice.setText(setLineText(product.getPrice()));
+            } else {
+                holder.tvProductSalePrice.setText(setLineText(product.getSalePrice()));
             }
             holder.tvProductPrice.setText(setUnline(product.getPrice()));
             holder.imageCheckLike.setOnClickListener(v->{
-                itemClickListener.onClick(position);
+                itemClickListener.onClick(product);
             });
         }
     }
 
     @Override
     public int getItemCount() {
-        return mListProduct.size();
+        return products.size();
     }
 
-    public class ProductViewHodel extends RecyclerView.ViewHolder {
-        private ImageView imageViewProduct;
-        private ImageView imageCheckLike;
-        private TextView tvNew;
-        private TextView tvProductSale;
-        private TextView tvProductName;
-        private TextView tvProductSalePrice;
-        private TextView tvProductPrice;
+    public static class ProductViewHodel extends RecyclerView.ViewHolder {
+        private final ImageView imageViewProduct;
+        private final ImageView imageCheckLike;
+        private final TextView tvNew;
+        private final TextView tvProductSale;
+        private final TextView tvProductName;
+        private final TextView tvProductSalePrice;
+        private final TextView tvProductPrice;
         public ProductViewHodel(@NonNull View itemView) {
             super(itemView);
             imageViewProduct = itemView.findViewById(R.id.imageProduct);
@@ -97,6 +104,37 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ProductV
             tvProductPrice = itemView.findViewById(R.id.tvProductPrice);
         }
     }
+
+    public Filter getFilter() {
+        return filter;
+    }
+
+    private Filter filter =new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Product> filteredList =new ArrayList<>();
+            if(constraint == null ||constraint.length()==0 ||constraint.toString().equals("All")) {
+                filteredList.addAll(productList);
+            }else {
+                String filterPattern =constraint.toString();
+                for(Product item : productList){
+                    if(item.getCategory().equals(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults filterResults =new FilterResults();
+            filterResults.values =filteredList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            products.clear();
+            products.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public SpannableString setUnline(Long myText){
         String tam = formatMoney(myText);
@@ -115,8 +153,23 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ProductV
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         return formatter.format(myText)+" đ";
     }
+
+    public void setListDataChange(List<Product> product) {
+        Log.d("AAA",products.toString());
+        products.clear();
+        products.addAll(product);
+        Log.d("AAA",products.toString());
+        notifyDataSetChanged();
+    }
+
+    public void updateUIposition(Product product) {
+        Log.d("AAA",products.toString()+"");
+        int position = products.indexOf(product);
+        Log.d("AAA",position+"");
+        notifyItemChanged(position);
+    }
     public interface ItemClickListener {
-        void onClick(int position);
+        void onClick(Product product);
     }
     @Override
     public long getItemId(int position) {
