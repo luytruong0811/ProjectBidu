@@ -14,9 +14,9 @@ import com.example.projectbidu.model.Category;
 
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHodel> {
-    private List<Category> categories;
-    private ItemClickListener itemClickListener;
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
+    private final List<Category> categories;
+    private final ItemClickListener itemClickListener;
 
     int row_index = 0;
 
@@ -28,13 +28,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @NonNull
     @Override
-    public CategoryViewHodel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_category, parent,false);
-        return new CategoryViewHodel(view);
+        return new CategoryViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryViewHodel holder, int position) {
+    public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         Category category = categories.get(position);
         holder.title.setText(category.getTitle());
         holder.itemView.setOnClickListener(v->{
@@ -57,10 +57,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return categories.size();
     }
 
-    public class CategoryViewHodel extends RecyclerView.ViewHolder {
-        private TextView title;
+    public static class CategoryViewHolder extends RecyclerView.ViewHolder {
+        private final TextView title;
 
-        public CategoryViewHodel(@NonNull View itemView) {
+        public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tvTittle);
 

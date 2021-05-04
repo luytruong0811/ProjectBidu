@@ -12,12 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryViewModel extends ViewModel {
-    private MutableLiveData<List<Category>> mutableLiveData;
-    private List<Category> categories;
+    private final MutableLiveData<List<Category>> mutableLiveData;
 
     public CategoryViewModel() {
         mutableLiveData = new MutableLiveData<>();
-        categories = new ArrayList<>();
+        List<Category> categories = new ArrayList<>();
         categories.add(new Category("All"));
         categories.add(new Category("Jacket"));
         categories.add(new Category("Sweater"));

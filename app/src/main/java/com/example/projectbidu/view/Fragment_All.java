@@ -58,22 +58,12 @@ public class Fragment_All extends Fragment implements ProductAdapter.ItemClickLi
         setRecyclerviewCategory();
         setRecyclerviewProduct();
         setRecyclerviewHasTag();
-        ivFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFilterDialog(Gravity.CENTER);
-            }
-        });
-        ivDateFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDateFilterDialog(Gravity.CENTER);
-            }
-        });
+        ivFilter.setOnClickListener(v -> openFilterDialog());
+        ivDateFilter.setOnClickListener(v -> openDateFilterDialog());
         return view;
     }
 
-    private void openDateFilterDialog(int gravity) {
+    private void openDateFilterDialog() {
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_date);
@@ -86,33 +76,23 @@ public class Fragment_All extends Fragment implements ProductAdapter.ItemClickLi
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.gravity = gravity;
+        windowAttributes.gravity = Gravity.CENTER;
         window.setAttributes(windowAttributes);
 
-        if(Gravity.CENTER == gravity) {
+        if(Gravity.CENTER == Gravity.CENTER) {
             dialog.setCancelable(false);
         }
         TextView tvExit = dialog.findViewById(R.id.tv_exit_date);
         TextView tvConfirm = dialog.findViewById(R.id.tv_confirm);
 
-        tvExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        tvExit.setOnClickListener(v -> dialog.dismiss());
 
-        tvConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        tvConfirm.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }
 
-    private void openFilterDialog(int gravity) {
+    private void openFilterDialog() {
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_filter);
@@ -125,28 +105,18 @@ public class Fragment_All extends Fragment implements ProductAdapter.ItemClickLi
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.gravity = gravity;
+        windowAttributes.gravity = Gravity.CENTER;
         window.setAttributes(windowAttributes);
 
-        if(Gravity.CENTER == gravity) {
+        if(Gravity.CENTER == Gravity.CENTER) {
             dialog.setCancelable(false);
         }
         TextView tvExit = dialog.findViewById(R.id.tv_exit);
         TextView tvConfirmFilter = dialog.findViewById(R.id.tv_confirm_filter);
 
-        tvExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        tvExit.setOnClickListener(v -> dialog.dismiss());
 
-        tvConfirmFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        tvConfirmFilter.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }
@@ -160,9 +130,7 @@ public class Fragment_All extends Fragment implements ProductAdapter.ItemClickLi
         HasTagViewModel hasTagViewModel = new ViewModelProvider(this).get(HasTagViewModel.class);
         HasTagAdapter hasTagAdapter = new HasTagAdapter(hasTagViewModel.getListHasTagLiveData().getValue());
 
-        hasTagViewModel.getListHasTagLiveData().observe(getViewLifecycleOwner(), hasTags -> {
-            hasTagAdapter.notifyDataSetChanged();
-        });
+        hasTagViewModel.getListHasTagLiveData().observe(getViewLifecycleOwner(), hasTags -> hasTagAdapter.notifyDataSetChanged());
         rvHasTag.setAdapter(hasTagAdapter);
     }
 
@@ -173,17 +141,13 @@ public class Fragment_All extends Fragment implements ProductAdapter.ItemClickLi
         rvProduct.setLayoutManager(gridLayoutManager);
 
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
-        //adapter
 
         productViewModel.getListProductLiveData().observe(getViewLifecycleOwner(), products -> {
             productAdapter = new ProductAdapter(products, this);
             rvProduct.setAdapter(productAdapter);
         });
 
-
-        productViewModel.getProduct().observe(getViewLifecycleOwner(), product -> {
-            productAdapter.updateUIposition(product);
-        });
+        productViewModel.getProduct().observe(getViewLifecycleOwner(), product -> productAdapter.updateUIposition(product));
     }
 
     private void setRecyclerviewCategory() {

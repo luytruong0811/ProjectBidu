@@ -43,7 +43,6 @@ public class Fragment_TopSellers extends Fragment implements CategoryAdapter.Ite
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment__top_sellers, container, false);
         rvCategory = view.findViewById(R.id.rvCategoryTop);
         rvSeller = view.findViewById(R.id.rvSellers);
@@ -51,22 +50,12 @@ public class Fragment_TopSellers extends Fragment implements CategoryAdapter.Ite
         ImageView ivDateFilter = view.findViewById(R.id.iv_date);
         setRecyclerviewCategory();
         setRecyclerviewSeller();
-        ivFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFilterDialog(Gravity.CENTER);
-            }
-        });
-        ivDateFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDateFilterDialog(Gravity.CENTER);
-            }
-        });
+        ivFilter.setOnClickListener(v -> openFilterDialog());
+        ivDateFilter.setOnClickListener(v -> openDateFilterDialog());
         return view;
     }
 
-    private void openDateFilterDialog(int gravity) {
+    private void openDateFilterDialog() {
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_date);
@@ -79,33 +68,23 @@ public class Fragment_TopSellers extends Fragment implements CategoryAdapter.Ite
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.gravity = gravity;
+        windowAttributes.gravity = Gravity.CENTER;
         window.setAttributes(windowAttributes);
 
-        if(Gravity.CENTER == gravity) {
+        if(Gravity.CENTER == Gravity.CENTER) {
             dialog.setCancelable(false);
         }
         TextView tvExit = dialog.findViewById(R.id.tv_exit_date);
         TextView tvConfirm = dialog.findViewById(R.id.tv_confirm);
 
-        tvExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        tvExit.setOnClickListener(v -> dialog.dismiss());
 
-        tvConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        tvConfirm.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }
 
-    private void openFilterDialog(int gravity) {
+    private void openFilterDialog() {
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_filter);
@@ -118,28 +97,18 @@ public class Fragment_TopSellers extends Fragment implements CategoryAdapter.Ite
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.gravity = gravity;
+        windowAttributes.gravity = Gravity.CENTER;
         window.setAttributes(windowAttributes);
 
-        if(Gravity.CENTER == gravity) {
+        if(Gravity.CENTER == Gravity.CENTER) {
             dialog.setCancelable(false);
         }
         TextView tvExit = dialog.findViewById(R.id.tv_exit);
         TextView tvConfirmFilter = dialog.findViewById(R.id.tv_confirm_filter);
 
-        tvExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        tvExit.setOnClickListener(v -> dialog.dismiss());
 
-        tvConfirmFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        tvConfirmFilter.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }
@@ -150,20 +119,22 @@ public class Fragment_TopSellers extends Fragment implements CategoryAdapter.Ite
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvSeller.setLayoutManager(linearLayoutManager);
 
-        SellersViewModel sellersViewModel = new ViewModelProvider(this).get(SellersViewModel.class);
-        sellersViewModel.getMutableLiveData().observe(getViewLifecycleOwner(), sellers -> {
-            topSellerAdapter = new TopSellerAdapter(sellers);
+        sellersViewModel = new ViewModelProvider(this).get(SellersViewModel.class);
+        sellersViewModel.getMutableLiveData().observe(getViewLifecycleOwner(), seller -> {
+            topSellerAdapter = new TopSellerAdapter(seller);
             rvSeller.setAdapter(topSellerAdapter);
         });
     }
 
     private void setRecyclerviewCategory() {
         rvCategory.setHasFixedSize(true);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         rvCategory.setLayoutManager(linearLayoutManager);
+
         CategoryViewModel categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         categoryViewModel.getListCategoryLiveData().observe(getViewLifecycleOwner(),categories->{
-            if(categoryAdapter ==null) {
+            if(categoryAdapter == null) {
                 categoryAdapter = new CategoryAdapter(categories,this);
                 rvCategory.setAdapter(categoryAdapter);
             }
@@ -175,4 +146,5 @@ public class Fragment_TopSellers extends Fragment implements CategoryAdapter.Ite
     public void getDataItemClick(Category category) {
         sellersViewModel.resetListSellers(category);
     }
+
 }

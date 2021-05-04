@@ -28,7 +28,7 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHodel> {
 
     private final List<Product> products;
-    private List<Product> productList;
+    private final List<Product> productList;
     private final ItemClickListener itemClickListener;
 
 
@@ -50,7 +50,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHodel holder, int position) {
         Product product =products.get(position);
         if(product == null ) {
-            return;
         }
         else {
             holder.imageViewProduct.setImageResource(product.getImageProduct());
@@ -74,9 +73,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 holder.tvProductSalePrice.setText(setLineText(product.getSalePrice()));
             }
             holder.tvProductPrice.setText(setUnline(product.getPrice()));
-            holder.imageCheckLike.setOnClickListener(v->{
-                itemClickListener.onClick(product);
-            });
+            holder.imageCheckLike.setOnClickListener(v-> itemClickListener.onClick(product));
         }
     }
 
