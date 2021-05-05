@@ -19,27 +19,21 @@ import java.util.List;
 public class ProductViewModel extends ViewModel {
     private final MutableLiveData<List<Product>> listMutableLiveData;
     private final MutableLiveData<Product> productMutableLiveData;
-    private final MutableLiveData<List<Product>> mListDataFitter;
-    private List<Product> products;
-
-    public void setListProduct(List<Product> products) {
-        this.products = products;
-    }
+    private final List<Product> products;
 
     public ProductViewModel() {
         listMutableLiveData = new MutableLiveData<>();
         productMutableLiveData = new MutableLiveData<>();
-        mListDataFitter = new MutableLiveData<>();
         products = new ArrayList<>();
-        products.add(new Product(1,R.drawable.anh1,false,"[Woman] Trousers short","Jacket",1700000L,null,false,null));
-        products.add(new Product(2,R.drawable.anh2,false,"[Code FASHIONHOT27 reduc 10K] Freeship 50K- Trousers......","Sweater",1700000L,1900000L,false,12L));
-        products.add(new Product(3,R.drawable.anh3,true,"[Woman] Trousers short","Jacket",240000L,1900000L,true,12L));
-        products.add(new Product(4,R.drawable.anh4,false,"[Code FASHIONHOT27 reduc 10K] Freeship 50K- Trousers","Blouse",1700000L,null,true,15L));
-        products.add(new Product(5,R.drawable.anh1,true,"[Woman] Trousers short","Skinny pants",450000L,600000L,true,null));
-        products.add(new Product(6,R.drawable.anh3,false,"[Code FASHIONHOT27 reduc 10K] Freeship 50K- Trousers","Blouse",450000L,null,false,15L));
-        products.add(new Product(7,R.drawable.anh4,true,"[Woman] Trousers short","Sweater",450000L,null,true,15L));
-        products.add(new Product(8,R.drawable.anh2,false,"[Code FASHIONHOT27 reduc 10K] Freeship 50K- Trousers","Skinny pants",450000L,null,true,null));
-        products.add(new Product(9,R.drawable.anh1,false,"[Woman] Trousers short","Sweater",450000L,600000L,true,15L));
+        products.add(new Product(1,R.drawable.anh1,false,"[Woman] Trousers short","Jacket","1.700.000 đ",null,false,null));
+        products.add(new Product(2,R.drawable.anh2,false,"[Code FASHIONHOT27 reduc 10K] Freeship 50K- Trousers......","Sweater","1.700.000 đ","1.900.000 đ",false,12L));
+        products.add(new Product(3,R.drawable.anh3,true,"[Woman] Trousers short","Jacket","240.000 đ","1.900.000 đ",true,12L));
+        products.add(new Product(4,R.drawable.anh4,false,"[Code FASHIONHOT27 reduc 10K] Freeship 50K- Trousers","Blouse","1.700.000 đ",null,true,15L));
+        products.add(new Product(5,R.drawable.anh1,true,"[Woman] Trousers short","Skinny pants","450.000 đ","600.000 đ",true,null));
+        products.add(new Product(6,R.drawable.anh3,false,"[Code FASHIONHOT27 reduc 10K] Freeship 50K- Trousers","Blouse","750.000 đ",null,false,15L));
+        products.add(new Product(7,R.drawable.anh4,true,"[Woman] Trousers short","Sweater","780.000 đ",null,true,15L));
+        products.add(new Product(8,R.drawable.anh2,false,"[Code FASHIONHOT27 reduc 10K] Freeship 50K- Trousers","Skinny pants","450.000 đ",null,true,null));
+        products.add(new Product(9,R.drawable.anh1,false,"[Woman] Trousers short","Sweater","308.000 đ","600.000 đ",true,15L));
         listMutableLiveData.setValue(products);
     }
 
@@ -49,10 +43,6 @@ public class ProductViewModel extends ViewModel {
 
     public MutableLiveData<Product> getProduct() {
         return productMutableLiveData;
-    }
-
-    public MutableLiveData<List<Product>> getListDataFitter() {
-        return mListDataFitter;
     }
 
     public void updateProduct(Product product) {

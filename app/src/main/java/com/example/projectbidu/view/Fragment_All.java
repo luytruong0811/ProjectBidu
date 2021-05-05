@@ -147,7 +147,7 @@ public class Fragment_All extends Fragment implements ProductAdapter.ItemClickLi
             rvProduct.setAdapter(productAdapter);
         });
 
-        productViewModel.getProduct().observe(getViewLifecycleOwner(), product -> productAdapter.updateUIposition(product));
+        productViewModel.getProduct().observe(getViewLifecycleOwner(), product -> productAdapter.updateUIPosition(product));
     }
 
     private void setRecyclerviewCategory() {

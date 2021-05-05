@@ -25,29 +25,27 @@ import java.util.List;
 
 
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHodel> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private final List<Product> products;
-    private final List<Product> productList;
     private final ItemClickListener itemClickListener;
 
 
     public ProductAdapter(List<Product> products, ItemClickListener itemClickListener) {
         this.products = products;
-        productList = new ArrayList<>(products);
         this.itemClickListener = itemClickListener;
     }
 
     @NonNull
     @Override
-    public ProductViewHodel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent,false);
-        return new ProductViewHodel(view);
+        return new ProductViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ProductViewHodel holder, int position) {
+    public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product =products.get(position);
         if(product == null ) {
         }
@@ -72,7 +70,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             } else {
                 holder.tvProductSalePrice.setText(setLineText(product.getSalePrice()));
             }
-            holder.tvProductPrice.setText(setUnline(product.getPrice()));
+            holder.tvProductPrice.setText(setUnLine(product.getPrice()));
             holder.imageCheckLike.setOnClickListener(v-> itemClickListener.onClick(product));
         }
     }
@@ -82,7 +80,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return products.size();
     }
 
-    public static class ProductViewHodel extends RecyclerView.ViewHolder {
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imageViewProduct;
         private final ImageView imageCheckLike;
         private final TextView tvNew;
@@ -90,7 +88,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         private final TextView tvProductName;
         private final TextView tvProductSalePrice;
         private final TextView tvProductPrice;
-        public ProductViewHodel(@NonNull View itemView) {
+        public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewProduct = itemView.findViewById(R.id.imageProduct);
             imageCheckLike = itemView.findViewById(R.id.imageCheckLike);
@@ -102,64 +100,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
     }
 
-    public Filter getFilter() {
-        return filter;
-    }
-
-    private Filter filter =new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Product> filteredList =new ArrayList<>();
-            if(constraint == null ||constraint.length()==0 ||constraint.toString().equals("All")) {
-                filteredList.addAll(productList);
-            }else {
-                String filterPattern =constraint.toString();
-                for(Product item : productList){
-                    if(item.getCategory().equals(filterPattern)){
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults filterResults =new FilterResults();
-            filterResults.values =filteredList;
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            products.clear();
-            products.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
-
-    public SpannableString setUnline(Long myText){
-        String tam = formatMoney(myText);
-        SpannableString spannableString=new SpannableString(tam);
-        spannableString.setSpan(new UnderlineSpan(), tam.length()-1, tam.length(), 0);
+    public SpannableString setUnLine(String myText){
+        SpannableString spannableString=new SpannableString(myText);
+        spannableString.setSpan(new UnderlineSpan(), myText.length()-1, myText.length(), 0);
         return spannableString;
     }
-    public SpannableString setLineText(Long myText){
-        String tam = formatMoney(myText);
-        SpannableString spannableString=new SpannableString(tam);
-        spannableString.setSpan(new UnderlineSpan(), tam.length()-1, tam.length(), 0);
-        spannableString.setSpan(new StrikethroughSpan(), 0, tam.length(), 0);
+    public SpannableString setLineText(String myText){
+        SpannableString spannableString=new SpannableString(myText);
+        spannableString.setSpan(new UnderlineSpan(), myText.length()-1, myText.length(), 0);
+        spannableString.setSpan(new StrikethroughSpan(), 0, myText.length(), 0);
         return spannableString;
     }
-    public String formatMoney(Long myText){
-        DecimalFormat formatter = new DecimalFormat("###,###,###");
-        return formatter.format(myText)+" đ";
-    }
 
-    public void setListDataChange(List<Product> product) {
-        Log.d("AAA",products.toString());
-        products.clear();
-        products.addAll(product);
-        Log.d("AAA",products.toString());
-        notifyDataSetChanged();
-    }
-
-    public void updateUIposition(Product product) {
+    public void updateUIPosition(Product product) {
         Log.d("AAA",products.toString()+"");
         int position = products.indexOf(product);
         Log.d("AAA",position+"");

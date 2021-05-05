@@ -3,11 +3,7 @@ package com.example.projectbidu.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.projectbidu.R;
 import com.example.projectbidu.model.Category;
-import com.example.projectbidu.model.Product;
-
 import java.util.ArrayList;
 import java.util.List;
 

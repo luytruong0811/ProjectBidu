@@ -1,17 +1,17 @@
 package com.example.projectbidu.model;
 
 public class Product {
-    private int idProduct;
-    private int imageProduct;
+    private final int idProduct;
+    private final int imageProduct;
     private boolean like;
-    private String title;
-    private String category;
-    private Long price;
-    private Long salePrice;
-    private boolean productNew;
-    private Long sale;
+    private final String title;
+    private final String category;
+    private final String price;
+    private final String salePrice;
+    private final boolean productNew;
+    private final Long sale;
 
-    public Product(int idProduct, int imageProduct, boolean like, String title, String category, Long price, Long salePrice, boolean productNew, Long sale) {
+    public Product(int idProduct, int imageProduct, boolean like, String title, String category, String price, String salePrice, boolean productNew, Long sale) {
         this.idProduct = idProduct;
         this.imageProduct = imageProduct;
         this.like = like;
@@ -27,16 +27,8 @@ public class Product {
         return idProduct;
     }
 
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
-    }
-
     public int getImageProduct() {
         return imageProduct;
-    }
-
-    public void setImageProduct(int imageProduct) {
-        this.imageProduct = imageProduct;
     }
 
     public boolean isLike() {
@@ -51,47 +43,23 @@ public class Product {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Long getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public Long getSalePrice() {
+    public String getSalePrice() {
         return salePrice;
-    }
-
-    public void setSalePrice(Long salePrice) {
-        this.salePrice = salePrice;
     }
 
     public boolean isProductNew() {
         return productNew;
     }
 
-    public void setProductNew(boolean productNew) {
-        this.productNew = productNew;
-    }
-
     public Long getSale() {
         return sale;
-    }
-
-    public void setSale(Long sale) {
-        this.sale = sale;
     }
 }

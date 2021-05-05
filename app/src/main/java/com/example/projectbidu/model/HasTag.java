@@ -1,17 +1,14 @@
 package com.example.projectbidu.model;
 
 public class HasTag {
-    private String hastag;
+    private final String hasTag;
 
     public HasTag(String hasTag) {
-        this.hastag = hasTag;
+        this.hasTag = hasTag;
     }
 
     public String getHasTag() {
-        return hastag;
+        return hasTag;
     }
 
-    public void setHasTag(String hasTag) {
-        this.hastag = hastag;
-    }
 }

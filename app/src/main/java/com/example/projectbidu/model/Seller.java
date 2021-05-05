@@ -17,10 +17,6 @@ public class Seller {
         this.hasTag = hasTag;
     }
 
-    public int getIdSeller() {
-        return idSeller;
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -39,5 +35,9 @@ public class Seller {
 
     public String getHasTag() {
         return hasTag;
+    }
+
+    public int getIdSeller() {
+        return idSeller;
     }
 }

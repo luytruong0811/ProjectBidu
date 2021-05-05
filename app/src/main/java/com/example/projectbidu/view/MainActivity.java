@@ -1,6 +1,5 @@
 package com.example.projectbidu.view;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
@@ -29,17 +28,14 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_path);
         viewPager2.setAdapter(viewPagerAdapter);
         viewPager2.setUserInputEnabled(false);
-        new TabLayoutMediator(mTabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                switch (position){
-                    case 0:
-                        tab.setText("All");
-                        break;
-                    case 1:
-                        tab.setText("Top Sellers");
-                        break;
-                }
+        new TabLayoutMediator(mTabLayout, viewPager2, (tab, position) -> {
+            switch (position){
+                case 0:
+                    tab.setText("All");
+                    break;
+                case 1:
+                    tab.setText("Top Sellers");
+                    break;
             }
         }).attach();
     }
