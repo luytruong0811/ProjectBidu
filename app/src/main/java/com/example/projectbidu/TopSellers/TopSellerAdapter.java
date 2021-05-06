@@ -1,4 +1,4 @@
-package com.example.projectbidu.adapter;
+package com.example.projectbidu.TopSellers;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectbidu.R;
-import com.example.projectbidu.model.Seller;
 
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class TopSellerAdapter extends RecyclerView.Adapter<TopSellerAdapter.Sell
         holder.imageSeller.setImageResource(seller.getImageSeller());
         holder.tvRanking.setText(String.valueOf(seller.getRankSeller()));
         holder.tvUserSeller.setText(seller.getUserName());
-        holder.tvHasTag.setText(seller.getHasTag());
+        holder.tvCategory.setText(seller.getCategory());
     }
 
     @Override
@@ -45,13 +44,13 @@ public class TopSellerAdapter extends RecyclerView.Adapter<TopSellerAdapter.Sell
     public static class SellerViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvRanking;
         private final TextView tvUserSeller;
-        private final TextView tvHasTag;
+        private final TextView tvCategory;
         private final ImageView imageSeller;
         public SellerViewHolder(@NonNull View itemView) {
             super(itemView);
             tvRanking = itemView.findViewById(R.id.tvRanking);
             tvUserSeller = itemView.findViewById(R.id.tvNameSeller);
-            tvHasTag = itemView.findViewById(R.id.tvHastag);
+            tvCategory = itemView.findViewById(R.id.tvCategory);
             imageSeller = itemView.findViewById(R.id.imageViewSeller);
         }
     }

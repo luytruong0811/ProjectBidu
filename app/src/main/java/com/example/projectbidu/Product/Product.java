@@ -1,4 +1,4 @@
-package com.example.projectbidu.model;
+package com.example.projectbidu.Product;
 
 public class Product {
     private final int idProduct;

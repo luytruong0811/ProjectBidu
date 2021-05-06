@@ -1,15 +1,12 @@
-package com.example.projectbidu.adapter;
+package com.example.projectbidu.Product;
 
 import android.annotation.SuppressLint;
 
 import android.text.SpannableString;
 import android.text.style.StrikethroughSpan;
-import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,10 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectbidu.R;
-import com.example.projectbidu.model.Product;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -70,7 +64,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             } else {
                 holder.tvProductSalePrice.setText(setLineText(product.getSalePrice()));
             }
-            holder.tvProductPrice.setText(setUnLine(product.getPrice()));
+            holder.tvProductPrice.setText(product.getPrice());
             holder.imageCheckLike.setOnClickListener(v-> itemClickListener.onClick(product));
         }
     }
@@ -98,26 +92,32 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             tvProductSalePrice = itemView.findViewById(R.id.tvSaleprice);
             tvProductPrice = itemView.findViewById(R.id.tvProductPrice);
         }
+
+        public void upDateLike(Boolean issLike) {
+            if(issLike) {
+                imageCheckLike.setImageResource(R.drawable.ic_favorite_icon);
+            } else {
+                imageCheckLike.setImageResource(R.drawable.ic_favorite_icon__stroke_);
+            }
+        }
     }
 
-    public SpannableString setUnLine(String myText){
-        SpannableString spannableString=new SpannableString(myText);
-        spannableString.setSpan(new UnderlineSpan(), myText.length()-1, myText.length(), 0);
-        return spannableString;
-    }
     public SpannableString setLineText(String myText){
         SpannableString spannableString=new SpannableString(myText);
-        spannableString.setSpan(new UnderlineSpan(), myText.length()-1, myText.length(), 0);
         spannableString.setSpan(new StrikethroughSpan(), 0, myText.length(), 0);
         return spannableString;
     }
 
     public void updateUIPosition(Product product) {
-        Log.d("AAA",products.toString()+"");
         int position = products.indexOf(product);
-        Log.d("AAA",position+"");
         notifyItemChanged(position);
     }
+
+    public int findItemProduct(Product product) {
+        return products.indexOf(product);
+    }
+
+
     public interface ItemClickListener {
         void onClick(Product product);
     }

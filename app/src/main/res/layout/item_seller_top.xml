@@ -73,13 +73,13 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginTop="13dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvHastag"
+        app:layout_constraintBottom_toTopOf="@+id/tvCategory"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvRanking"
         tools:targetApi="p" />
 
     <TextView
-        android:id="@+id/tvHastag"
+        android:id="@+id/tvCategory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"

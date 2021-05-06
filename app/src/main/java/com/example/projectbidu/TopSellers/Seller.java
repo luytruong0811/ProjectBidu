@@ -1,4 +1,4 @@
-package com.example.projectbidu.model;
+package com.example.projectbidu.TopSellers;
 
 public class Seller {
     private final int idSeller;
@@ -6,15 +6,17 @@ public class Seller {
     private final int imageSeller;
     private final int rankSeller;
     private final String category;
-    private final String hasTag;
 
-    public Seller(int idSeller, String userName, int imageSeller, int rankSeller, String category, String hasTag) {
+    public Seller(int idSeller, String userName, int imageSeller, int rankSeller, String category) {
         this.idSeller = idSeller;
         this.userName = userName;
         this.imageSeller = imageSeller;
         this.rankSeller = rankSeller;
         this.category = category;
-        this.hasTag = hasTag;
+    }
+
+    public int getIdSeller() {
+        return idSeller;
     }
 
     public String getUserName() {
@@ -33,11 +35,5 @@ public class Seller {
         return category;
     }
 
-    public String getHasTag() {
-        return hasTag;
-    }
 
-    public int getIdSeller() {
-        return idSeller;
-    }
 }

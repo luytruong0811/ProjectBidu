@@ -1,4 +1,4 @@
-package com.example.projectbidu.adapter;
+package com.example.projectbidu.main;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -6,8 +6,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.projectbidu.view.Fragment_All;
-import com.example.projectbidu.view.Fragment_TopSellers;
+import com.example.projectbidu.Product.Fragment_All;
+import com.example.projectbidu.TopSellers.Fragment_TopSellers;
+import com.google.android.material.tabs.TabLayout;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
 
@@ -31,5 +32,16 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     @Override
     public int getItemCount() {
         return 2;
+    }
+
+    public void setTitle(TabLayout.Tab tab, int position) {
+        switch (position){
+            case 0:
+                tab.setText("All");
+                break;
+            case 1:
+                tab.setText("Top Sellers");
+                break;
+        }
     }
 }

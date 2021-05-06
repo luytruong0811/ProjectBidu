@@ -1,4 +1,4 @@
-package com.example.projectbidu.model;
+package com.example.projectbidu.Category;
 
 public class Category {
     private final String title;

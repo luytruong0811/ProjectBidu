@@ -1,4 +1,4 @@
-package com.example.projectbidu.adapter;
+package com.example.projectbidu.Hastag;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectbidu.R;
-import com.example.projectbidu.model.HasTag;
 
 import java.util.List;
 

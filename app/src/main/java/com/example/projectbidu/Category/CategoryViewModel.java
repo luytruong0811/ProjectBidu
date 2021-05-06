@@ -1,9 +1,9 @@
-package com.example.projectbidu.viewmodel;
+package com.example.projectbidu.Category;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.example.projectbidu.model.Category;
+import com.example.projectbidu.Category.Category;
 import java.util.ArrayList;
 import java.util.List;
 

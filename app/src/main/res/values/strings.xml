@@ -27,4 +27,6 @@
     <string name="latest">Latest</string>
     <string name="oldest">Oldest</string>
     <string name="confirm">Confirm</string>
+    <string name="iv">TODO</string>
+    <string name="ranking_page">Ranking Page</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.projectbidu.view;
+package com.example.projectbidu.Product;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -7,8 +7,10 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,36 +22,40 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.projectbidu.R;
-import com.example.projectbidu.adapter.CategoryAdapter;
-import com.example.projectbidu.adapter.TopSellerAdapter;
-import com.example.projectbidu.model.Category;
-import com.example.projectbidu.viewmodel.CategoryViewModel;
-import com.example.projectbidu.viewmodel.SellersViewModel;
+import com.example.projectbidu.Category.CategoryAdapter;
+import com.example.projectbidu.Hastag.HasTagAdapter;
+import com.example.projectbidu.Category.Category;
+import com.example.projectbidu.Category.CategoryViewModel;
+import com.example.projectbidu.Hastag.HasTagViewModel;
 
 
-public class Fragment_TopSellers extends Fragment implements CategoryAdapter.ItemClickListener {
+public class Fragment_All extends Fragment implements ProductAdapter.ItemClickListener, CategoryAdapter.ItemClickListener {
     private CategoryAdapter categoryAdapter;
+    private ProductAdapter productAdapter;
     private RecyclerView rvCategory;
+    private RecyclerView rvProduct;
+    private RecyclerView rvHasTag;
+    private ProductViewModel productViewModel;
 
-    private TopSellerAdapter topSellerAdapter;
-    private RecyclerView rvSeller;
-    private SellersViewModel sellersViewModel;
 
-    public Fragment_TopSellers() {
+    public Fragment_All() {
         // Required empty public constructor
     }
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment__top_sellers, container, false);
-        rvCategory = view.findViewById(R.id.rvCategoryTop);
-        rvSeller = view.findViewById(R.id.rvSellers);
+        View view = inflater.inflate(R.layout.fragment__all, container, false);
+        rvCategory = view.findViewById(R.id.rvCategory);
+        rvProduct = view.findViewById(R.id.rvProduct);
+        rvHasTag = view.findViewById(R.id.rv_has_tag);
         ImageView ivFilter = view.findViewById(R.id.iv_filter);
         ImageView ivDateFilter = view.findViewById(R.id.iv_date);
         setRecyclerviewCategory();
-        setRecyclerviewSeller();
+        setRecyclerviewProduct();
+        setRecyclerviewHasTag();
         ivFilter.setOnClickListener(v -> openFilterDialog());
         ivDateFilter.setOnClickListener(v -> openDateFilterDialog());
         return view;
@@ -113,28 +119,51 @@ public class Fragment_TopSellers extends Fragment implements CategoryAdapter.Ite
         dialog.show();
     }
 
-    private void setRecyclerviewSeller() {
-        rvSeller.setHasFixedSize(true);
+    private void setRecyclerviewHasTag() {
+        rvHasTag.setHasFixedSize(true);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        rvSeller.setLayoutManager(linearLayoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvHasTag.setLayoutManager(linearLayoutManager);
 
-        sellersViewModel = new ViewModelProvider(this).get(SellersViewModel.class);
-        sellersViewModel.getMutableLiveData().observe(getViewLifecycleOwner(), seller -> {
-            topSellerAdapter = new TopSellerAdapter(seller);
-            rvSeller.setAdapter(topSellerAdapter);
+        HasTagViewModel hasTagViewModel = new ViewModelProvider(this).get(HasTagViewModel.class);
+        HasTagAdapter hasTagAdapter = new HasTagAdapter(hasTagViewModel.getListHasTagLiveData().getValue());
+
+        hasTagViewModel.getListHasTagLiveData().observe(getViewLifecycleOwner(), hasTags -> hasTagAdapter.notifyDataSetChanged());
+        rvHasTag.setAdapter(hasTagAdapter);
+    }
+
+    private void setRecyclerviewProduct() {
+        rvProduct.setHasFixedSize(true);
+        ((SimpleItemAnimator) rvProduct.getItemAnimator()).setSupportsChangeAnimations(false);
+
+        GridLayoutManager gridLayoutManager =new GridLayoutManager(getContext(),2);
+        rvProduct.setLayoutManager(gridLayoutManager);
+
+        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+
+        productViewModel.getListProductLiveData().observe(getViewLifecycleOwner(), products -> {
+            productAdapter = new ProductAdapter(products, this);
+            rvProduct.setAdapter(productAdapter);
+        });
+
+        productViewModel.getProduct().observe(getViewLifecycleOwner(), product -> {
+            int pos = productAdapter.findItemProduct(product);
+            ProductAdapter.ProductViewHolder vh = (ProductAdapter.ProductViewHolder) rvProduct.findViewHolderForAdapterPosition(pos);
+            if (vh!= null) {
+                vh.upDateLike(product.isLike());
+            } else {
+                productAdapter.updateUIPosition(product);
+            }
         });
     }
 
     private void setRecyclerviewCategory() {
         rvCategory.setHasFixedSize(true);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         rvCategory.setLayoutManager(linearLayoutManager);
-
         CategoryViewModel categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
-        categoryViewModel.getListCategoryLiveData().observe(getViewLifecycleOwner(),categories->{
-            if(categoryAdapter == null) {
+        categoryViewModel.getListCategoryLiveData().observe(getViewLifecycleOwner(), categories->{
+            if(categoryAdapter ==null) {
                 categoryAdapter = new CategoryAdapter(categories,this);
                 rvCategory.setAdapter(categoryAdapter);
             }
@@ -143,8 +172,13 @@ public class Fragment_TopSellers extends Fragment implements CategoryAdapter.Ite
     }
 
     @Override
-    public void getDataItemClick(Category category) {
-        sellersViewModel.resetListSellers(category);
+    public void onClick(Product product) {
+        productViewModel.updateProduct(product);
     }
 
+
+    @Override
+    public void getDataItemClick(Category category) {
+        productViewModel.resetListProduct(category);
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.projectbidu.adapter;
+package com.example.projectbidu.Category;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectbidu.R;
-import com.example.projectbidu.model.Category;
 
 import java.util.List;
 

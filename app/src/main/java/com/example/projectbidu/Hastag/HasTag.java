@@ -1,4 +1,4 @@
-package com.example.projectbidu.model;
+package com.example.projectbidu.Hastag;
 
 public class HasTag {
     private final String hasTag;
